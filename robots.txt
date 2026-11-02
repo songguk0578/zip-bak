@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://songguk0578.github.io/zip-bak/sitemap.xml
