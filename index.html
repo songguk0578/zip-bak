@@ -7,7 +7,7 @@
 <meta name="description" content="해운대구 × 송국클럽하우스 「집 밖의 숲」. 온라인(ZEP)과 오프라인 모임으로 천천히 밖으로 나오는 청년 프로젝트예요.">
 <link rel="canonical" href="https://songguk0578.github.io/zip-bak/">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#FBF8F5">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="집 밖의 숲">
 <meta property="og:title" content="집 밖의 숲 — 방에서 접속, 숲에서 만나요">
@@ -21,25 +21,16 @@
 <style>
 /* ===== 디자인 토큰 (v2 · 템플릿 방향: 흰 바탕, 검정 알약 버튼, 초록 강조 한 가지) ===== */
 :root {
-  --bg:#ffffff; --soft:#f7f7f8; --card:#ffffff;
-  --ink:#111827; --sub:#4b5563; --mute:#6b7280; --line:#e5e7eb; --line2:#d1d5db;
-  --pri:#111111; --onpri:#ffffff; --pri-hover:#2b2b2b;
-  --accent:#0b7a4b; --accent-soft:#e7f4ed;
+  /* v2.1 (2026-11-09): 첫 화면 수채화 그림의 크림 바탕 + 그림 속 짙은 숲색 */
+  --bg:#FBF8F5; --soft:#F4EEE4; --card:#FFFDFA;
+  --ink:#1F2A1C; --sub:#4E5547; --mute:#655F55; --line:#E8E0D2; --line2:#D3C9B7;
+  --pri:#2F4A24; --onpri:#ffffff; --pri-hover:#3F5A2E;
+  --accent:#4E6B3A; --accent-soft:#E9EEDC;
   --warn:#b3261e; --warn-soft:#fdeceb;
-  --focus:#0b7a4b;
+  --focus:#4E6B3A;
   --radius:20px;
   --font:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg:#0f1110; --soft:#171a18; --card:#151816;
-    --ink:#f3f4f2; --sub:#b4b8b3; --mute:#9aa09a; --line:#2a2e2b; --line2:#3a3f3b;
-    --pri:#f3f4f2; --onpri:#0f1110; --pri-hover:#d9dbd8;
-    --accent:#4cc98c; --accent-soft:#16291e;
-    --warn:#ff8a80; --warn-soft:#3a1b19; --focus:#4cc98c;
-    color-scheme: dark;
-  }
+  color-scheme: light; /* 수채화와 맞추기 위해 어두운 화면 모드는 쓰지 않음 */
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; } /* 숨김 속성이 다른 display 값에 덮이지 않게 */
@@ -90,8 +81,19 @@ a { color: inherit; }
 .mnav a:hover { color: var(--accent); }
 
 /* ===== 첫 화면 ===== */
-.hero { text-align: center; }
-.hero .w-n { padding-block: clamp(48px, 9vw, 96px) clamp(40px, 7vw, 72px); display: flex; flex-direction: column; align-items: center; gap: 22px; }
+.hero { text-align: center; background:
+  linear-gradient(to bottom, var(--bg) 0, rgba(251,248,245,0) 7%, rgba(251,248,245,0) 82%, var(--bg) 100%),
+  var(--bg) url(assets/forest.webp) center bottom / cover no-repeat; min-height: min(58vw, 780px); }
+.hero .w-n { padding-block: clamp(56px, 7vw, 96px) clamp(170px, 19vw, 300px); display: flex; flex-direction: column; align-items: center; gap: 22px; }
+/* 태블릿: 그림 전체 폭을 보여 양옆 나무·사람이 잘리지 않게 */
+@media (min-width: 721px) and (max-width: 1100px) {
+  .hero { background-size: 100% 56.3vw, 100% auto; background-position: center bottom, center bottom; min-height: calc(56.3vw + 180px); }
+}
+/* 휴대폰: 세로 화면에서는 그림 양옆(나무·사람)이 잘려 어색하므로 그림을 빼고 크림 바탕만 */
+@media (max-width: 720px) {
+  .hero { background: var(--bg); min-height: 0; }
+  .hero .w-n { padding-bottom: 40px; }
+}
 .badge { display: inline-flex; align-items: center; gap: 10px; background: var(--pri); color: var(--onpri); text-decoration: none; font-size: 14px; font-weight: 500; padding: 6px 14px 6px 6px; border-radius: 999px; max-width: 100%; }
 .badge em { font-style: normal; background: var(--onpri); color: var(--pri); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; flex: none; }
 .badge span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -228,6 +230,7 @@ a { color: inherit; }
 .res b { font-size: 16px; }
 .res .status { font-size: 12px; font-weight: 700; color: var(--sub); border: 1px solid var(--line2); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
 .res p { font-size: 14px; color: var(--sub); }
+.res a { font-size: 13.5px; font-weight: 700; }
 .rec { display: grid; grid-template-columns: 1fr auto; gap: 2px 16px; padding: 18px 0; border-bottom: 1px solid var(--line); text-decoration: none; }
 .rec .date { font-size: 13px; font-weight: 700; color: var(--mute); grid-column: 1; }
 .rec b { font-size: 16.5px; grid-column: 1; }
@@ -405,18 +408,18 @@ footer .help b { color: var(--warn); }
     <div class="w-n">
       <a class="badge" href="#schedule" id="heroBadge"><em>모집</em><span id="heroBadgeText">이번 모임 일정을 확인해 보세요</span><svg class="ic" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"></use></svg></a>
       <span class="kick">해운대구 × 송국클럽하우스 · <span data-bind="targetLine">만 19~39세 부산 청년</span></span>
-      <h1 id="h1">방에서 접속,<br><span class="hl">숲에서</span> 만나요</h1>
-      <p class="lead">카메라도 마이크도 꺼도 괜찮아요. 캐릭터로 먼저 인사하고, 마음이 생기면 그때 직접 만나요.</p>
+      <h1 id="h1">만나 봐요,<br><span class="hl">집 밖의 숲</span></h1>
+      <p class="lead">2주에 한 번, ZEP에서 열리는 청년 모임. 얼굴 대신 캐릭터로 들어와 듣기만 하다 나가도 돼요.</p>
       <div class="btns">
-        <a class="btn pri" href="#schedule"><svg class="ic" aria-hidden="true"><use href="#i-cal"></use></svg>이번 모임 보기</a>
-        <a class="btn out" href="#story"><svg class="ic" aria-hidden="true"><use href="#i-chat"></use></svg>이야기 먼저 남기기</a>
+        <a class="btn pri" href="#schedule"><svg class="ic" aria-hidden="true"><use href="#i-cal"></use></svg>모임 일정 보기</a>
+        <a class="btn out" href="#story"><svg class="ic" aria-hidden="true"><use href="#i-chat"></use></svg>먼저 물어보기</a>
       </div>
     </div>
   </section>
 
   <div class="g"><div class="w doors" aria-label="두 개의 문">
-    <a class="door" href="#about"><span class="q">집에 머무는 시간이 길어졌다면</span><b>집 밖의 숲</b><span><span data-bind="targetLine">만 19~39세 부산 청년</span>. 온라인 모임부터 천천히 시작해요.</span><span class="go">집 밖의 숲 보기 <svg class="ic" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"></use></svg></span></a>
-    <a class="door" href="#org"><span class="q">정신건강의 어려움에서 회복하고 싶다면</span><b>송국클럽하우스</b><span>만 18세 이상. 일 중심 공동체에서 일·관계·성장을 회복해요.</span><span class="go">기관 안내 보기 <svg class="ic" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"></use></svg></span></a>
+    <a class="door" href="#about"><span class="q">요즘 집에 있는 시간이 대부분인가요?</span><b>집 밖의 숲</b><span><span data-bind="targetLine">만 19~39세 부산 청년</span>을 위한 온라인 모임이에요.</span><span class="go">모임 보러 가기 <svg class="ic" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"></use></svg></span></a>
+    <a class="door" href="#org"><span class="q">정신건강 때문에 일상이 멈췄다면</span><b>송국클럽하우스</b><span>만 18세 이상. 회원과 직원이 함께 운영하는 일 중심 공동체예요.</span><span class="go">기관 알아보기 <svg class="ic" aria-hidden="true" style="width:16px;height:16px"><use href="#i-arrow"></use></svg></span></a>
   </div></div>
 
   <!-- ===================== 1. 소개 ===================== -->
@@ -485,9 +488,9 @@ footer .help b { color: var(--warn); }
             <div class="bar"><span>17:00</span><span class="dots"><i></i><i></i><i></i></span></div>
             <div><p class="t">만나 봐요, 집 밖의 숲</p><p class="s">ZEP 공간 · 지금 함께 있는 캐릭터</p></div>
             <div class="map">
-              <span class="av" data-n="숲길" style="left:18%;top:22%;background:#0b7a4b">숲</span>
+              <span class="av" data-n="숲길" style="left:18%;top:22%;background:#4E6B3A">숲</span>
               <span class="av" data-n="별빛" style="left:52%;top:40%;background:#6b7280">별</span>
-              <span class="av" data-n="나" style="left:74%;top:16%;background:#111111">나</span>
+              <span class="av" data-n="나" style="left:74%;top:16%;background:#2F4A24">나</span>
             </div>
             <div class="bub"><small>숲길</small>안녕하세요, 처음 오셨어요?</div>
             <div class="bub me"><small>나</small>네, 오늘은 듣기만 할게요</div>
@@ -611,10 +614,10 @@ footer .help b { color: var(--warn); }
     <div class="w-n">
       <div class="hd"><span class="eb">자료실</span><h2 id="h-resources">자료실</h2><p>준비되는 자료부터 차례로 올릴게요.</p></div>
       <div class="resList">
-        <div class="res"><div class="row"><b>META 모델·성과집</b><span class="status">준비 중</span></div><p>3년의 활동을 정리한 자료예요.</p></div>
-        <div class="res"><div class="row"><b>학술 논문 — 사회적 고립 청년을 위한 지역 네트워크 형성과 디지털 혼합 실천 경험</b><span class="status">준비 중</span></div><p>해운대구 실무자 인터뷰 연구. 링크는 준비 중이에요.</p></div>
+        <div class="res"><div class="row"><b>META 모델·성과집</b></div><p>3년의 활동을 정리한 자료예요. <a href="https://songguk.tistory.com/2143" target="_blank" rel="noopener">자료 보기 →</a></p></div>
+        <div class="res"><div class="row"><b>학술 논문 — 사회적 고립 청년을 위한 지역 네트워크 형성과 디지털 혼합 실천 경험</b></div><p>해운대구 실무자 인터뷰 연구. <a href="https://drive.google.com/file/d/1w41Osk4rtnbbe1OHPThhxvl0vZRJ1kUX/view" target="_blank" rel="noopener">논문 보기 →</a></p></div>
         <div class="res"><div class="row"><b>언론보도</b><span class="status">제목만 공개</span></div><p>청년에게 돌아온 새해 일상 (부산일보, 2025.01.06) · 다시 봄, SOLO 성료 (국제신문, 2025.12.02) · 근로체험 협약 (뉴스1, 2026.07.16). 링크는 준비 중이에요.</p></div>
-        <div class="res"><div class="row"><b>인식개선 애니메이션 「문 하나의 거리」</b><span class="status">제작 중</span></div><p>해운대구청과 함께 만들고 있어요. 완성되면 이 자리에서 볼 수 있어요.</p></div>
+        <div class="res"><div class="row"><b>고립청년 인식개선 영상</b></div><p>해운대구청과 함께 만든 인식개선 영상이에요. <a href="https://youtu.be/y-SCmFTvVBU?si=VbaKEnOA1Xh6WtoX" target="_blank" rel="noopener">영상 보기 →</a></p></div>
       </div>
     </div>
   </section>
@@ -1071,10 +1074,19 @@ footer .help b { color: var(--warn); }
       b.hidden = !accepting; n.hidden = accepting;
     });
   }
+  /* 지난 모임은 화면에서 뺀다: 모임 날짜가 오늘(방문자 기준)보다 이전이면 숨김 */
+  function todayStr() {
+    var d = new Date();
+    return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  }
+  function upcoming(events) {
+    var t = todayStr();
+    return (events || []).filter(function (e) { return !e.date || String(e.date).slice(0, 10) >= t; });
+  }
   function render(data) {
     DATA = data;
     renderSettingsText(data.settings);
-    renderEvents(data.events);
+    renderEvents(upcoming(data.events));
     renderRecords(data.records);
     renderPartners(data.partners);
     applyAccepting(data.settings ? data.settings.accepting !== false : true);
